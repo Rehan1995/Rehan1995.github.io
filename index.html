@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<meta name="universal-app/config/environment"
+  content="%7B%22modulePrefix%22%3A%22universal-app%22%2C%22environment%22%3A%22development%22%2C%22rootURL%22%3A%22/%22%2C%22locationType%22%3A%22auto%22%2C%22EmberENV%22%3A%7B%22FEATURES%22%3A%7B%7D%7D%2C%22moment%22%3A%7B%22includeLocales%22%3A%5B%22en%22%2C%22ar%22%2C%22fr%22%5D%7D%2C%22contentSecurityPolicy%22%3A%7B%22default-src%22%3A%22%27none%27%22%2C%22script-src%22%3A%22%27self%27%20%27unsafe-inline%27%20%27unsafe-eval%27%20www.google-analytics.com%22%2C%22font-src%22%3A%22%27self%27%20data%3A%20use.typekit.net%20fonts.gstatic.com%22%2C%22img-src%22%3A%22%27self%27%20data%3A%20image/png%20www.google-analytics.com%22%2C%22connect-src%22%3A%22%27self%27%20www.google-analytics.com%20wss%3A//data-sa9.mubasher.net/html5ws%22%2C%22style-src%22%3A%22%27self%27%20%27unsafe-inline%27%20http%3A//fonts.googleapis.com%22%2C%22frame-src%22%3A%22%27self%27%20http%3A//dfnnet.directfn.com/ESTORERIA/Agreement/en/EULA.htm%22%7D%2C%22APP%22%3A%7B%22isTestMode%22%3Atrue%2C%22priceConnectionParameters%22%3A%7B%22primary%22%3A%7B%22ip%22%3A%22data-sa9.mubasher.net/html5ws%22%2C%22port%22%3A%22%22%2C%22secure%22%3Atrue%7D%7D%2C%22name%22%3A%22universal-app%22%2C%22version%22%3A%220.0.0+a2eca9f5%22%7D%2C%22exportApplicationGlobal%22%3Atrue%7D" />
+
+<body>
+  <script src="./hypergrid-bundle.js"></script>
+
+  <div id="dd2" class="hypergrid-canvas"></div>
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: sans-serif;
+      width: 100%;
+      background-color: rgb(39, 39, 39);
+      height: 100%;
+    }
+
+    .table-wrapper-height {
+      height: 100%;
+      width: 100%;
+      overflow: auto;
+      background-color: red;
+    }
+
+    #dd2>div:nth-child(1),
+    #div>div:nth-child(1) {
+      height: 100%;
+      width: 100%;
+    }
+
+    h1 {
+      color: white;
+      text-align: center;
+    }
+
+    .hypergrid-canvas {
+      height: 1900px;
+      width: 1100px;
+      background-color: '#18191b';
+    }
+    </style>
+
+  <script type="module">
+
+    window.onload = event => {
+
+      const nativeData = JSON.parse(window.ReactNativeWebView.injectedObjectJson());
+
+      let dataTable;
+      let container = document.getElementById('dd2');
+      let { schemaValue } = nativeData;
+
+      document.addEventListener('message', event => {
+        const messageData = JSON.parse(event.data);
+        dataTable.setData({ data: messageData, schema: schemaValue });
+      });
+
+
+      dataTable = new Hypergrid.Hypergrid(container);
+
+      //dataTable.setData({   });
+
+      dataTable.cellRenderers.add('@ui-components/tables/PlusMinusTableColumn', Hypergrid.custom.plusMinusTableColumn);
+      dataTable.cellRenderers.add('@ui-components/tables/SimpleTableColumn', Hypergrid.custom.simpleTableColumn);
+
+      dataTable.properties.rowHeaderNumbers = false;
+      dataTable.properties.rowHeaderCheckboxes = false;
+      dataTable.properties.cellBorderThickness = 0;
+      dataTable.properties.hoverRowHighlight = false;
+      dataTable.properties.defaultRowHeight = 100;
+      dataTable.properties.gridLinesH = false;
+      dataTable.properties.gridLinesV = false;
+      dataTable.properties.cellPadding = 0;
+      dataTable.properties.cellSelection = true;
+      dataTable.properties.autoSelectRows = true;
+      dataTable.properties.columnSelection = true;
+      dataTable.properties.hoverColumnHighlight = { enabled: true };
+      dataTable.properties.rowSelection = true;
+      dataTable.properties.font = '42px verdana';
+      dataTable.properties.columnHeaderFont = '42px Roboto, Helvetica, Arial, sans-serif';
+      dataTable.properties.columnHeaderColor = 'white'
+      dataTable.properties.columnHeaderBackgroundColor = '';
+      dataTable.properties.singleRowSelectionMode = false;
+      dataTable.properties.columnAutosizing = false;
+      dataTable.properties.showRowNumbers = false;
+      dataTable.properties.selectionRegionOutlineColor = '';
+      dataTable.properties.columnHeaderBackgroundSelectionColor = '#959697';
+      dataTable.properties.backgroundColor2 = '';
+      dataTable.properties.hoverCellHighlight = { enabled: false };
+      dataTable.properties.fixedLinesHWidth = 0;
+      dataTable.properties.fixedLinesVColor = '';
+      dataTable.properties.isArabic = false;
+      dataTable.properties.setScrollingNow = false;
+
+      // dataTable.behavior.dataModel.getCell = function (config, cellRenderer) {
+      //   return dataTable.cellRenderers.get(cellRenderer);
+      // };
+
+   
+    };
+  </script>
+
+</body>
+
+</html>
